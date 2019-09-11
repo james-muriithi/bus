@@ -28,21 +28,23 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrapValidator.css">
     <link rel="stylesheet" type="text/css" href="css/nice-select.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.seat-charts.css">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/confetti.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
+    <link href="fonts/material-design-icons/material-icon.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="plugins/material-datetimepicker/bootstrap-material-datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/material.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- end of css -->
 </head>
 
 <body>
-    <div id="particles-js"></div>
     <nav class="navbar navbar-expand-lg navbar-dark static-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
                 <h1>
+                    <img src="images/p1.png" alt="logo" width="30" height="30" style="margin-top: -10px">
                     <span>B</span>
                     <span>U</span>
                     <span>S</span>
@@ -53,11 +55,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
+                    <!-- <li class="nav-item active">
+                        <a class="nav-link" href="#">Reprint
                             <span class="sr-only">(current)</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <button class="btn btn-outline-warning my-2 my-sm-0 ml-3" type="submit">Login</button>
                     </li>
@@ -71,62 +73,207 @@
             </div>
         </div>
     </nav>
+    <!-- </navbar -->
+
+    <!-- main content -->
     <main class="col-md-12">
-        <div class="col-md-6 mx-auto">
+        <div class="col-md-7 mx-auto window">
             <section class="stepper">
                 <!-- progressbar -->
                 <ul id="progressbar" style="padding-inline-start:8px;">
                     <li class="active">Travel Date</li>
-                    <li>Select Seat</li>
-                    <li>Personal Details</li>
-                    <li>Confirm Details</li>
+                    <li>Available Buses</li>
+                    <li>Book Seat</li>
+                    <li>Details</li>
                     <li>Payment</li>
                     <li>Ticket</li>
                 </ul>
             </section>
             <section class="body">
                 <form id="date_form">
-                    <div class="form-row">
-                        <div class="form-group col-md-8">
-                            <label>Date of travel</label>
-                            <input type="text" class="form-control" id="date" name="date" placeholder="2019-02-14" required>
+                    <fieldset class="animated fadeIn">
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>From</label>
+                                <input type="text" class="form-control" name="from" placeholder="From">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>To</label>
+                                <input type="text" class="form-control" name="to" placeholder="To">
+                            </div>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Time</label>
-                            <select class="form-control time" name="time" required>
-                                <option disabled>--Time--</option>
-                                <option value="">08:00</option>
-                                <option value="">19:00</option>
-                                <option value="">22:00</option>
-                            </select>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Date of travel</label>
+                                <input type="text" class="form-control" id="date" name="date" placeholder="2019-02-14">
+                            </div>
+                            <!-- <div class="form-group col-md-4 ">
+                                <label>Time</label>
+                                <select class="form-control time " name="time " required>
+                                            <option disabled>--Time--</option>
+                                            <option value=" ">08:00</option>
+                                            <option value=" ">19:00</option>
+                                            <option value=" ">22:00</option>
+                                        </select>
+                            </div> -->
                         </div>
-                    </div>
-                    <div class="row justify-content-center buttons">
-                        <button type="button" class="btn previous_button">Back</button>
-                        <button type="button" class="btn next_button">Continue</button>
-                    </div>
+                        <div class="row justify-content-center buttons">
+                            <button type="button " class="btn previous_button">Back</button>
+                            <button type="button " class="btn next_button">Continue</button>
+                        </div>
+                    </fieldset>
+                    <fieldset class="animated fadeIn">
+                        <div id="results">
+                            <!-- <h6>3 buses found</h6> -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3 bus-image">
+                                                <img src="images/p2.png" alt="bus" height="130" width="130">
+                                            </div>
+                                            <div class="col-md-8 bus-details">
+                                                <h5 class="card-title bus-name">KCB 432X (<span class="bus-type">35</span> Seater)</h5>
+
+
+                                                <div class="row card-text m-b-10 bus-description">
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="material-icons" style="font-size: 13px;">watch</i> Departure: <span class="p-r-5 fr">20:30hr </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="fa fa-road"></i> Route: 
+                                                        <span class="p-r-5 fr">Nairobi - Mombasa </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="material-icons" style="font-size: 13px;">event_seat</i> Availability: 
+                                                        <span class="p-r-5 fr">2 seats left </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="fa fa-money"></i> Fare:
+                                                        <span class="p-r-5 fr">1500 Kes </span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-t-13">
+                                                    <a href="#" class="btn btn-circle btn-success book_btn">Book Seats</a>
+                                                    <a href="#" class="fr p-t-10">View Gallery</a>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3 bus-image">
+                                                <img src="images/p.png" alt="bus" height="130" width="130">
+                                            </div>
+                                            <div class="col-md-8 bus-details">
+                                                <h5 class="card-title bus-name">KCP 578X (<span class="bus-type">45</span> Seater)</h5>
+                                                <div class="row card-text m-b-10 bus-description">
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="material-icons" style="font-size: 13px;">watch</i> Departure: <span class="p-r-5 fr">20:30hr </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="fa fa-road"></i> Route: 
+                                                        <span class="p-r-5 fr">Nairobi - Mombasa </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="material-icons" style="font-size: 13px;">event_seat</i> Availability: 
+                                                        <span class="p-r-5 fr">12 seats left </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="fa fa-money"></i> Fare:
+                                                        <span class="p-r-5 fr">1400 Kes </span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-t-13">
+                                                    <a href="#" class="btn btn-circle btn-success book_btn">Book Seats</a>
+                                                    <a href="#" class="fr p-t-10">View Gallery</a>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3 bus-image">
+                                                <img src="images/p3.png" alt="bus" height="130" width="130">
+                                            </div>
+                                            <div class="col-md-8 bus-details">
+                                                <h5 class="card-title bus-name">KCK 122Y (<span class="bus-type">49</span> Seater)</h5>
+                                                <div class="row card-text m-b-10 bus-description">
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="material-icons" style="font-size: 13px;">watch</i> Departure: <span class="p-r-5 fr">21:30hr </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="fa fa-road"></i> Route: 
+                                                        <span class="p-r-5 fr">Nairobi - Mombasa </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="material-icons" style="font-size: 13px;">event_seat</i> Availability: 
+                                                        <span class="p-r-5 fr">22 seats left </span>
+                                                    </div>
+                                                    <div class="col-md-6 fs-14">
+                                                        <i class="fa fa-money"></i> Fare:
+                                                        <span class="p-r-5 fr">1200 Kes </span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-t-13">
+                                                    <a href="javascript:void(0);" class="btn btn-circle btn-success book_btn">Book Seats</a>
+                                                    <a href="#" class="fr p-t-10">View Gallery</a>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center buttons">
+                            <button type="button " class="btn previous_button">Back</button>
+                        </div>
+                    </fieldset>
+                    <!-- seat map -->
+                    <fieldset class="animated fadeIn">
+                        <div id="seats">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div id="seat-map">
+                                        <div class="front-indicator">Driver</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="booking-details">
+                                        <h2 class="header">Booking Details</h2>
+                                        <h3> Selected Seats <span id="counter">0</span>:</h3>
+                                        <ul id="selected-seats">
+                                        </ul>
+                                        <p>Total: <b><span id="total">0</span> Kes</b></p>
+                                        <br>
+                                    </div>
+                                    <!-- <div id="legend" class=""></div> -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row justify-content-center buttons ">
+                            <button type="button " class="btn previous_button">Back</button>
+                            <button type="button " class="btn next_button">Continue</button>
+                        </div>
+                    </fieldset>
+
                 </form>
-                <form id="date_form">
-                    <div class="form-row">
-                        <div class="form-group col-md-8">
-                            <label>Date of travel</label>
-                            <input type="text" class="form-control" id="date" name="date" placeholder="2019-02-14" required>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Time</label>
-                            <select class="form-control time" name="time" required>
-                                <option disabled>--Time--</option>
-                                <option value="">08:00</option>
-                                <option value="">19:00</option>
-                                <option value="">22:00</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center buttons">
-                        <button type="button" class="btn previous_button">Back</button>
-                        <button type="button" class="btn next_button">Continue</button>
-                    </div>
-                </form>
+
             </section>
         </div>
     </main>
@@ -134,115 +281,114 @@
 
 </html>
 <!-- javascript -->
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/popper.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/bootstrapValidator.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/jquery.nice-select.js"></script>
-<script type="text/javascript" src="js/jquery.seat-charts.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/particles.min.js"></script>
-<script type="text/javascript" src="js/stats.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript " src="js/jquery.min.js "></script>
+<script type="text/javascript " src="js/popper.min.js "></script>
+<script type="text/javascript " src="js/bootstrap.min.js "></script>
+<script type="text/javascript " src="js/bootstrapValidator.js "></script>
+<script type="text/javascript " src="js/jquery-easing.min.js "></script>
+<script type="text/javascript " src="js/jquery.nice-select.js "></script>
+<script type="text/javascript " src="js/jquery.seat-charts.js "></script>
+<script type="text/javascript " src="js/particles.min.js "></script>
+<script src="plugins/material-datetimepicker/moment-with-locales.min.js "></script>
+<script src="plugins/material-datetimepicker/bootstrap-material-datetimepicker.js "></script>
+<script src="plugins/material-datetimepicker/datetimepicker.js "></script>
+<script type="text/javascript " src="js/script.js "></script>
 <script type="text/javascript">
-flatpickr("#date", { disableMobile: true });
-$('select.time').niceSelect();
-(function($) {
-    "use strict";
-    //* Form js
-    function verificationForm() {
-        //jQuery time
-        var current_fs, next_fs, previous_fs; //fieldsets
-        var left, opacity, scale; //fieldset properties which we will animate
-        var animating; //flag to prevent quick multi-click glitches
+    (function($) {
+        "use strict ";
+        // Form js
+        function verificationForm() {
+            //jQuery time
+            var current_fs, next_fs, previous_fs; //fieldsets
+            var left, opacity, scale; //fieldset properties which we will animate
+            var animating; //flag to prevent quick multi-click glitches
 
-        $(".next_button").click(function() {
-            if (animating) return false;
-            animating = true;
+            $(".next_button").click(function() {
+                if (animating) return false;
+                animating = true;
 
-            current_fs = $(this).parent().parent();
-            next_fs = current_fs.next();
-            //de-activate current step on progressbar
-            $("#progressbar li").eq($("form").index(next_fs)).addClass("active");
-            //show the next fieldset
-            next_fs.show();
+                current_fs = $(this).parent().parent();
+                next_fs = current_fs.next();
 
-            current_fs.animate({
-                opacity: 0
-            }, {
-                step: function(now, mx) {
-                    //as the opacity of current_fs reduces to 0 - stored in "now"
-                    //1. scale current_fs down to 80%
-                    scale = 1 - (2 - now) * 0.2;
-                    //2. bring next_fs from the right(50%)
-                    left = (now * 50) + "%";
-                    //3. increase opacity of next_fs to 1 as it moves in
-                    opacity = 1 - now;
-                    current_fs.css({
-                        'transform': 'scale(' + scale + ')',
-                        'position': 'absolute'
-                    });
-                    next_fs.css({
-                        'left': left,
-                        'opacity': opacity
-                    });
-                },
-                duration: 800,
-                complete: function() {
-                    current_fs.hide();
-                    animating = false;
-                },
-                //this comes from the custom easing plugin
-                easing: 'easeInOutBack'
+                //de-activate current step on progressbar
+                $("#progressbar li ").eq($("fieldset").index(next_fs)).addClass("active");
+                //show the next fieldset
+                next_fs.show();
+
+                current_fs.animate({
+                    opacity: 0
+                }, {
+                    duration: 10,
+                    complete: function() {
+                        current_fs.hide();
+                        animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+
             });
+            $(".book_btn").click(function() {
+                if (animating) return false;
+                animating = true;
 
-        });
-        $(".previous_butto").click(function () {
-            if (animating) return false;
-            animating = true;
+                current_fs = $(this).parents('fieldset');
+                next_fs = current_fs.next();
+                
+                //de-activate current step on progressbar
+                $("#progressbar li ").eq($("fieldset").index(next_fs)).addClass("active");
+                //show the next fieldset
+                next_fs.show();
 
-            current_fs = $(this).parent().parent();
-            previous_fs = current_fs.prev();
+                current_fs.animate({
+                    opacity: 0
+                }, {
+                    duration: 10,
+                    complete: function() {
+                        current_fs.hide();
+                        animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
 
-            //de-activate current step on progressbar
-            $("#progressbar li").eq($("form").index(current_fs)).removeClass("active");
-
-            //show the previous fieldset
-            previous_fs.show();
-            //hide the current fieldset with style
-            current_fs.animate({
-                opacity: 0
-            }, {
-                step: function (now, mx) {
-                    //as the opacity of current_fs reduces to 0 - stored in "now"
-                    //1. scale previous_fs from 80% to 100%
-                    scale = 0.8 + (1 - now) * 0.2;
-                    //2. take current_fs to the right(50%) - from 0%
-                    left = ((1 - now) * 50) + "%";
-                    //3. increase opacity of previous_fs to 1 as it moves in
-                    opacity = 1 - now;
-                    current_fs.css({
-                        'left': left
-                    });
-                    previous_fs.css({
-                        'transform': 'scale(' + scale + ')',
-                        'opacity': opacity,
-                        'position': 'absolute'
-                    });
-                },
-                duration: 800,
-                complete: function () {
-                    current_fs.hide();
-                    animating = false;
-                },
-                //this comes from the custom easing plugin
-                easing: 'easeInOutBack'
             });
-        });
-    }
-    verificationForm();
-})(jQuery);
+            $(".previous_button").click(function() {
+
+                current_fs = $(this).parent().parent();
+                
+                previous_fs = current_fs.prev();
+
+                //de-activate current step on progressbar
+                if (previous_fs.length > 0) {
+                    if (animating) return false;
+                    animating = true;
+                    $("#progressbar li ").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                    //show the previous fieldset
+                    previous_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({
+                        opacity: 0
+                    }, {
+
+                        duration: 100,
+                        complete: function() {
+                            current_fs.hide();
+                            previous_fs.css('opacity', 1);
+                            animating = false;
+                        },
+                        //this comes from the custom easing plugin
+                        easing: 'easeInOutBack'
+                    });
+                }
+            });
+        }
+        verificationForm();
+        $('#date_form').on('submit', (event) => {
+            event.preventDefault();
+        })
+    })(jQuery);
+    
 </script>
 <!-- end of js -->
