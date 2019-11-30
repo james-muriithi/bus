@@ -11,10 +11,3 @@ This is a simple bus booking project am working on currently.
 
 ## Screenshot
 ![Screen Shots](https://james-muriithi.github.io/bus/images/screenshot.png)
-
-
-
-
-
-
-
