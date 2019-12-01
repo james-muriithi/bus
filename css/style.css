@@ -63,14 +63,26 @@ body {
     background-clip: border-box;
     background-size: cover;
 }
-
+/*body:before{
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(12, 0, 50, .3);
+}*/
 canvas {
     display: block;
     top:0;
     /* vertical-align: bottom; */
 }
 
-
+ul{
+    padding-inline-start: 20px!important;
+}
 
 /*top navbar*/
 
@@ -249,6 +261,10 @@ input {
     height: 42px !important;
 }
 
+.nice-select.form-control{
+    padding-bottom: 15px;
+}
+
 #date_form label,
 input {
     color: #4b2354!important;
@@ -306,6 +322,7 @@ div.buttons {
 }
 
 .bus-description div{
+    font-size: 15px;
     font-family: josefin;
     padding-top: 9px;
     color: #99a2a8;
@@ -313,6 +330,10 @@ div.buttons {
 }
 .fr{
     float: right;
+}
+.bus-description div span{
+    color: #003300;
+    font-size: 14px;
 }
 .btn-circle {
     border-radius: 25px!important;
@@ -347,18 +368,13 @@ div.seatCharts-cell {
 }
 
 .front-indicator {
-    display: inline;
     width: 60px;
     float: right;
-    margin-top: -35px;
+    margin-top: -26px;
     margin-right: 5px;
-    background-color: #d79922;
-    color: #fefefe;
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 15px;
-    font-family: kanit_regular;
+    background-color: transparent;
+    position: absolute;
+    left: 53%;
 }
 
 div.seatCharts-seat {
@@ -402,6 +418,7 @@ div.seatCharts-container {
     border-right: 1px dotted #adadad;
     min-width: 200px;
     padding: 20px;
+    padding-left: 5px;
     float: left;
 }
 
@@ -433,8 +450,9 @@ li.seatCharts-legendItem>div.seatCharts-seat.seater_35{
 #selected-seats {
     max-height: 200px;
     overflow-y: scroll;
-    overflow-x: hidden;
-    width: 250px;
+    overflow-wrap: break-word;
+    width: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
 #selected-seats li {
     list-style-type: none;
@@ -443,6 +461,7 @@ li.seatCharts-legendItem>div.seatCharts-seat.seater_35{
     display: inline-block;
     padding-inline-start: 0px;
     padding-left: 0px;
+    word-break: break-word;
 }
 .booking-details {
     float: left;
@@ -450,14 +469,14 @@ li.seatCharts-legendItem>div.seatCharts-seat.seater_35{
     margin-left: 10px;
     font-size: 13px;
     position: relative;
-    height: 401px;
+    /*height: 401px;*/
 }
 
 .booking-details h2 {
     margin: 5px 0 10px 0;
     font-size: 17px;
     color: #444;
-    font-size: 35px;
+    font-size: 25px;
     font-weight: normal;
     line-height: 1.1;
 }
@@ -468,7 +487,7 @@ li.seatCharts-legendItem>div.seatCharts-seat.seater_35{
     font-family: Monospace;
 }
 
-@media (max-width:601px) {
+@media (max-width:576px) {
     div.seatCharts-container {
         border: none;
     }
@@ -513,6 +532,21 @@ li.seatCharts-legendItem>div.seatCharts-seat.seater_35{
     }
 }
 
+@media (max-width:411px) {
+    .seatCharts-seat.seatCharts-cell,.seatCharts-cell.seatCharts-space{
+        width: 31px;
+    }
+}
+@media (max-width: 381px) {
+    .seatCharts-seat.seatCharts-cell,.seatCharts-cell.seatCharts-space{
+        width: 28px;
+    }
+}
+@media (max-width:322px) {
+    .seatCharts-seat.seatCharts-cell,.seatCharts-cell.seatCharts-space{
+        width: 25px;
+    }
+}
 
 /*large screen*/
 
