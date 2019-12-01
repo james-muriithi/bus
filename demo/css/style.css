@@ -165,6 +165,7 @@ div.window.mx-auto {
 main #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
+    padding-inline-start: 0px!important;
 }
 
 main #progressbar li {
