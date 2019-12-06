@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="plugins/material-datetimepicker/bootstrap-material-datetimepicker.css" />
     <link rel="stylesheet" type="text/css" href="css/animate.css">
     <link rel="stylesheet" type="text/css" href="css/material.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/lobibox/css/lobibox.min.css">
     <link rel="stylesheet" type="text/css" href="css/simplelightbox.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- end of css -->
@@ -285,6 +286,51 @@
                             <button type="button " class="btn next_button btn-booked">Continue</button>
                         </div>
                     </fieldset>
+                    <!-- END SEAT MAP -->
+                    <!-- PERSONAL INFO -->
+                    <fieldset class="animated fadeIn p-info">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Full Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="John Doe" onkeyup="verifyInfoForm()">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id">Id</label>
+                                <input type="text" class="form-control" name="id" placeholder="12345678" onkeyup="verifyInfoForm()">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="phone">Mobile No.</label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="0712345678" onkeyup="verifyInfoForm()">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="john@doe.com" onkeyup="verifyInfoForm()">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center buttons">
+                            <button type="button " class="btn previous_button">Back</button>
+                            <button type="button " class="btn next_button">Continue</button>
+                        </div>
+                    </fieldset>
+                    <!-- END PERSONAL INFO -->
+                    <!-- PAYMENT -->
+                    <fieldset class="animated fadeIn p-info">
+                        <div class="row justify-content-center buttons">
+                            <button type="button " class="btn previous_button">Back</button>
+                            <button type="button " class="btn next_button">Continue</button>
+                        </div>
+                    </fieldset>
+                    <!-- END PAYMENT -->
+                    <!-- TICKET -->
+                    <fieldset class="animated fadeIn p-info">
+                        <div class="row justify-content-center buttons">
+                            <button type="button " class="btn previous_button">Back</button>
+                            <button type="button " class="btn next_button">Continue</button>
+                        </div>
+                    </fieldset>
+                    <!-- END TICKET -->
                 </form>
             </section>
         </div>
@@ -304,10 +350,10 @@
 <script src="plugins/material-datetimepicker/bootstrap-material-datetimepicker.js "></script>
 <script src="plugins/material-datetimepicker/datetimepicker.js "></script>
 <script type="text/javascript" src="js/simple-lightbox.min.js"></script>
+<script type="text/javascript" src="plugins/lobibox/js/lobibox.min.js"></script>
 <script type="text/javascript " src="js/script.js "></script>
 <script type="text/javascript">
 $('select').niceSelect();
-
 
 $('.g-link').on('click', function(event) {
     $('.gallery1 a').trigger('click')
@@ -316,7 +362,7 @@ $('.g-link').on('click', function(event) {
 var $gallery = $('.gallery1 a').simpleLightbox();
 
 //jQuery time
-var current_fs, next_fs, previous_fs; //fieldsets
+var current_fs, next_fs, previous_fs, busId; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
@@ -335,13 +381,30 @@ $(".next_button").on('click', function(event) {
     }
 
     if ($("fieldset").index(current_fs) == 2) {
-        console.log($('ul.selected-seats li').length);
-        if ($('ul.selected-seats li').length == 0) {
+        if ($('ul#selected-seats li').length == 0) {
+            animating = false;
+            Lobibox.notify('error', {
+                showClass: 'fadeInDown',
+                hideClass: 'fadeUpDown',
+                iconSource: 'fontAwesome',
+                // img: 'images/logo-96.png',
+                title: "No Seat Selected!",
+                continueDelayOnInactiveTab: true,
+                size: 'mini',
+                msg: 'Please select at least one seat from the selected bus.'
+            });
 
-        }else{
+        } else {
             goNext(next_fs, current_fs)
         }
-    }else{
+    } else if ($("fieldset").index(current_fs) == 3) {
+        animating = false;
+        if (!verifyInfoForm()) {
+
+        } else {
+            goNext(next_fs, current_fs)
+        }
+    } else {
         goNext(next_fs, current_fs)
     }
 
@@ -354,12 +417,12 @@ $(".next_button").on('click', function(event) {
 
     //go to next fs
     // $(".next_button").unbind('click',goNext(next_fs, current_fs));
-    
+
 });
 
 
 $(".book_btn").click(function() {
-    var busId = $(this).data('bus'); //determine which bus was choosen
+    busId = $(this).data('bus'); //determine which bus was choosen
     if (animating) return false;
     animating = true;
 
@@ -417,6 +480,92 @@ function goNext(next_fs, current_fs) {
         },
         //this comes from the custom easing plugin
         easing: 'easeInOutBack'
+    });
+}
+
+function verifyInfoForm() {
+    let name = $('input[name="name"]'),
+        id = $('input[name="id"]'),
+        phone = $('input[name="phone"]'),
+        email = $('input[name="email"]'),
+        nameRegexp = /^[a-zA-Z]+\s+[a-zA-Z\s]+$/,
+        idRegexp = /^\d{8}$/,
+        emailRegexp = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i,
+        phoneRegexp = /^(0|\+?254)7(\d){8}$/,
+        isValid = []
+    if ($.trim(name.val()) == '') {
+        name.addClass('is-invalid')
+        name.parent().find('small.text-danger').remove()
+        name.parent().append('<small class="text-danger">Name field cannot be empty</small>')
+        isValid['name'] = false;
+    } else if (!nameRegexp.test($.trim(name.val()))) {
+        name.addClass('is-invalid')
+        name.parent().find('small.text-danger').remove()
+        name.parent().append('<small class="text-danger">Full name can only consist of alphabetical and atlest two names.</small>')
+        isValid['name'] = false;
+    } else {
+        name.removeClass('is-invalid')
+        name.addClass('is-valid')
+        name.parent().find('small.text-danger').remove();
+        isValid['name'] = true;
+    }
+
+    // phone no
+
+    if ($.trim(phone.val()) == '') {
+        phone.addClass('is-invalid')
+        phone.parent().find('small.text-danger').remove()
+        phone.parent().append('<small class="text-danger">Phone No field cannot be empty</small>')
+        isValid['phone'] = false;
+    } else if (!phoneRegexp.test($.trim(phone.val()))) {
+        phone.addClass('is-invalid')
+        phone.parent().find('small.text-danger').remove()
+        phone.parent().append('<small class="text-danger">Please provide a valid phone number.</small>')
+        isValid['phone'] = false;
+    } else {
+        phone.removeClass('is-invalid')
+        phone.addClass('is-valid')
+        phone.parent().find('small.text-danger').remove();
+        isValid['phone'] = true;
+    }
+    // id
+    if ($.trim(id.val()) == '') {
+        id.addClass('is-invalid')
+        id.parent().find('small.text-danger').remove()
+        id.parent().append('<small class="text-danger">Id field cannot be empty</small>')
+        isValid['id'] = false;
+    } else if (!idRegexp.test($.trim(id.val()))) {
+        id.addClass('is-invalid')
+        id.parent().find('small.text-danger').remove()
+        id.parent().append('<small class="text-danger">Please provide a valid ID number.</small>')
+        isValid['id'] = false;
+    } else {
+        id.removeClass('is-invalid')
+        id.addClass('is-valid')
+        id.parent().find('small.text-danger').remove();
+        isValid['id'] = true;
+    }
+
+    // email
+    if ($.trim(email.val()) == '') {
+        email.addClass('is-invalid')
+        email.parent().find('small.text-danger').remove()
+        email.parent().append('<small class="text-danger">Email field cannot be empty</small>')
+        isValid['email'] = false;
+    } else if (!emailRegexp.test($.trim(email.val()))) {
+        email.addClass('is-invalid')
+        email.parent().find('small.text-danger').remove()
+        email.parent().append('<small class="text-danger">Please provide a valid email address.</small>')
+        isValid['email'] = false;
+    } else {
+        email.removeClass('is-invalid')
+        email.addClass('is-valid')
+        email.parent().find('small.text-danger').remove();
+        isValid['email'] = true;
+    }
+
+    return Object.values(isValid).every(function (value) {
+        return value == true;
     });
 }
 
