@@ -1,0 +1,121 @@
+/**
+ * BootstrapValidator (http://bootstrapvalidator.com)
+ * The best jQuery plugin to validate form fields. Designed to use with Bootstrap 3
+ *
+ * @author      http://twitter.com/nghuuphuoc
+ * @copyright   (c) 2013 - 2014 Nguyen Huu Phuoc
+ * @license     MIT
+ */
+
+.bv-form .help-block {
+    margin-bottom: 0;
+    color: #a94442;
+}
+.bv-form .tooltip-inner {
+    text-align: left;
+}
+.nav-tabs li.bv-tab-success > a {
+    color: #3c763d;
+}
+.nav-tabs li.bv-tab-error > a {
+    color: #a94442;
+}
+
+.bv-form .bv-icon-no-label {
+	top: 0;
+}
+
+.bv-form .bv-icon-input-group {
+	top: 0;
+	z-index: 100;
+}
+/*    Input States
+-----------------------*/
+.has-default .form-control.active,
+.has-error .form-control.active,
+.has-success .form-control.active,
+.has-warning .form-control.active,
+.has-default .form-control:focus,
+.has-error .form-control:focus,
+.has-success .form-control:focus,
+.has-warning .form-control:focus,
+.has-default .form-control:hover,
+.has-error .form-control:hover,
+.has-success .form-control:hover,
+.has-warning .form-control:hover {
+  box-shadow: none;
+}
+.has-default .control-label {
+  color: #878787;
+}
+.has-default .form-control {
+  border-color: #878787;
+}
+.has-default .form-control.active,
+.has-default .form-control:focus,
+.has-default .form-control:hover {
+  border-color: #878787;
+}
+.has-success .control-label {
+  color: #26dad2;
+}
+.has-success .form-control {
+  border-color: #26dad2;
+}
+.has-success .form-control.active,
+.has-success .form-control:focus,
+.has-success .form-control:hover {
+  border-color: #26dad2;
+}
+.has-warning .control-label {
+  color: #ffb64d;
+}
+.has-warning .form-control {
+  border-color: #ffb64d;
+}
+.has-warning .form-control.active,
+.has-warning .form-control:focus,
+.has-warning .form-control:hover {
+  border-color: #ffb64d;
+}
+.has-error .control-label {
+  color: #fc6180;
+}
+.has-error .form-control {
+  border-color: #fc6180;
+}
+.has-error .form-control.active,
+.has-error .form-control:focus,
+.has-error .form-control:hover {
+  border-color: #fc6180;
+}
+.has-feedback label ~ .form-control-feedback {
+  top: 35px;
+}
+.form-horizontal .has-feedback .form-control-feedback {
+  top: 5px;
+}
+.has-success .form-control-feedback {
+  color: #26dad2;
+}
+.has-warning .form-control-feedback {
+  color: #ffb64d;
+}
+.has-error .form-control-feedback {
+  color: #fc6180;
+}
+.has-success .input-group-addon {
+  background-color: #93ede9;
+  border-color: #26dad2;
+  color: #26dad2;
+}
+.has-warning .input-group-addon {
+  background-color: #ffeacd;
+  border-color: #ffb64d;
+  color: #ffb64d;
+}
+.has-error .input-group-addon {
+  background-color: #fedee5;
+  border-color: #fc6180;
+  color: #fc6180;
+}
