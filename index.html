@@ -270,7 +270,8 @@
                                 </div>
                                 <div class="col-lg-4 col-xl-6 col-sm-4 col-md-5">
                                     <div class="booking-details">
-                                        <h2 class="header">Booking Details</h2>
+                                        <h2 class="header">Booking Details 
+                                            <span class="number_plate badge badge-primary fs-12"></span></h2>
                                         <h3> Selected Seats <span id="counter">0</span>:</h3>
                                         <ul id="selected-seats">
                                         </ul>
@@ -317,6 +318,7 @@
                     <!-- END PERSONAL INFO -->
                     <!-- PAYMENT -->
                     <fieldset class="animated fadeIn p-info">
+
                         <div class="row justify-content-center buttons">
                             <button type="button " class="btn previous_button">Back</button>
                             <button type="button " class="btn next_button">Continue</button>
@@ -423,6 +425,8 @@ $(".next_button").on('click', function(event) {
 
 $(".book_btn").click(function() {
     busId = $(this).data('bus'); //determine which bus was choosen
+    let busName = $(this).parents('.bus-details').children('.bus-name').text();
+    $('span.number_plate').text($(this).parents('.bus-details').children('.bus-name').text())
     if (animating) return false;
     animating = true;
 
@@ -573,5 +577,28 @@ function verifyInfoForm() {
 $('#date_form').on('submit', (event) => {
     event.preventDefault();
 })
+
+$('ul#progressbar').on('click', 'li', function(event) {
+    let i = $('#progressbar li').index(this)
+    let j = $('#progressbar').find('li.active').length - 1
+
+    if (i > j) {
+        if (j == 1) {
+            Lobibox.notify('error', {
+                showClass: 'fadeInDown',
+                hideClass: 'fadeUpDown',
+                iconSource: 'fontAwesome',
+                // img: 'images/logo-96.png',
+                title: "No Bus Selected!",
+                continueDelayOnInactiveTab: true,
+                size: 'mini',
+                msg: 'Please select a bus from which you want to book.'
+            });
+        }else{
+            $("fieldset").eq(j).find('.next_button').trigger('click')
+        }
+    }else if (i < j) $("fieldset").eq(j).find('.previous_button').trigger('click')
+    
+});
 </script>
 <!-- end of js -->
