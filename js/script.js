@@ -119,7 +119,7 @@ $('#selected-seats').on('click', '.cancel-cart-item', function() {
 let booked_seats = function(bus_id) {
     $.ajax({
         method: 'GET', //https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
-        url: 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id='+$.trim(bus_id)+'&booked_seats',
+        url: 'api/book.php?bus_id='+$.trim(bus_id)+'&booked_seats',
         success: function (data) {
             sc.find('unavailable').status('available');
             data.forEach((element => sc.get([sc.seatIds[element-1]]).status('unavailable')))
