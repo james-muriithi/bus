@@ -443,7 +443,7 @@ $(".next_button").on('click', function(event) {
             $data = JSON.stringify($data)
             $.ajax({
                 method: 'POST',//https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
-                url: 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/api/book.php',
+                url: 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/',
                 data: $data,
                 dataType: 'json',
                 success: function (data) {
@@ -470,7 +470,7 @@ $(".next_button").on('click', function(event) {
 
 
 $(".book_btn").click(function() {
-    busId = $(this).data('bus'); //determine which bus was choosen
+    busId = Number($(this).data('bus')); //determine which bus was choosen
     let busName = $(this).parents('.bus-details').children('.bus-name').text();
     $('span.number_plate').text($(this).parents('.bus-details').children('.bus-name').text())
     if (animating) return false;

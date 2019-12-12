@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: http://localhost/schemaq/api/');
+header('Access-Control-Allow-Origin: https://james-muriithi.github.io');
 header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Max-Age: 3600');
@@ -14,7 +14,7 @@ $bus = new Bus();
 if (isset($_GET['booked_seats'], $_GET['bus_id']) && !empty($_GET['bus_id'])){
     $bus_id = Database::clean($_GET['bus_id']);
     $bus->setBusId($bus_id);
-    $booked = $bus->getBookedSeats(1);
+    $booked = $bus->getBookedSeats($bus_id);
     echo json_encode(array_map(static function ($arr){ return $arr['seat_no'];},$booked));
 }
 

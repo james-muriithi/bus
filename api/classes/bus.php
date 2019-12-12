@@ -55,12 +55,12 @@ class Bus extends Email
     }
 
     /**
-     * @param $bus_id int optional bus id
+     * @param $bus_id string optional bus id
      * @return array
      */
-    public function getBookedSeats($bus_id = 0): array
+    public function getBookedSeats($bus_id = ''): array
     {
-        $bus_id = ($bus_id == 0 )? $this->bus_id : $bus_id;
+        $bus_id = ($bus_id == '' )? $this->bus_id : $bus_id;
         $query = 'SELECT
                     b.id,
                     c.fullname,
@@ -86,7 +86,7 @@ class Bus extends Email
         // prepare query statement
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(':id', $bus_ids);
+        $stmt->bindParam(':id', $bus_id);
 
         $stmt->execute();
 
