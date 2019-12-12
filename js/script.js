@@ -46,9 +46,8 @@
          //     ]
          // },
          click: function() {
-             //alert(vip_price);
-             $(event.target).toggleClass('animated rubberBand')
              if (this.status() == 'available') {
+                 $(event.target).toggleClass('animated rubberBand')
                  //let's create a new <li> which we'll add to the cart items
                  $('<li class="p-b-4">' + this.data().category + ' Seat # ' +
                          this.settings.label + ': <b>Ksh ' + this.data().price +
@@ -73,6 +72,7 @@
 
                  return 'selected';
              } else if (this.status() == 'selected') {
+                 $(event.target).toggleClass('animated rubberBand')
                  //update the counter
                  $counter.text(sc.find('selected').length - 1);
                  //and total
@@ -114,3 +114,18 @@ $('#selected-seats').on('click', '.cancel-cart-item', function() {
     //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
     sc.get($(this).parents('li:first').data('seatId')).click();
 });
+
+
+let booked_seats = function(bus_id) {
+    $.ajax({
+        method: 'GET', //https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
+        url: 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id='+$.trim(bus_id)+'&booked_seats',
+        success: function (data) {
+            sc.find('unavailable').status('available');
+            data.forEach((element => sc.get([sc.seatIds[element-1]]).status('unavailable')))
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    });
+};
