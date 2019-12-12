@@ -4,5 +4,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/New folder" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/css/animate css" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/demo/css/animate css" vcs="Git" />
   </component>
 </project>

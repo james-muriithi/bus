@@ -293,17 +293,17 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="name">Full Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="John Doe" onkeyup="verifyInfoForm()">
+                                <input type="text" class="form-control" name="name" placeholder="John Doe" onkeyup="verifyInfoForm()" id="name">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="id">Id</label>
-                                <input type="text" class="form-control" name="id" placeholder="12345678" onkeyup="verifyInfoForm()">
+                                <input type="text" class="form-control" name="id" placeholder="12345678" onkeyup="verifyInfoForm()" id="id">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="phone">Mobile No.</label>
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="0712345678" onkeyup="verifyInfoForm()">
+                                <input type="text" class="form-control" id="phone" name="phone" id="phone" placeholder="0712345678" onkeyup="verifyInfoForm()">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="email">Email</label>
@@ -318,18 +318,39 @@
                     <!-- END PERSONAL INFO -->
                     <!-- PAYMENT -->
                     <fieldset class="animated fadeIn p-info">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-10">
+                                <h6>
+                                    Please send your money to <b>0718982694 Simon Anzigare</b>.
+                                    A Printable PDF ticket will be sent to your email (<span class="show-email"></span>) upon payment completion. So please ensure you provide a valid email address. <br><br>
+                                    <span class="note">Note: If you havent made a deposit by  days your reservation will be cancelled.</span>
+                                </h6>
+                            </div>
+                        </div>
 
                         <div class="row justify-content-center buttons">
                             <button type="button " class="btn previous_button">Back</button>
-                            <button type="button " class="btn next_button">Continue</button>
+                            <button type="button " class="btn next_button">Finish</button>
                         </div>
                     </fieldset>
                     <!-- END PAYMENT -->
                     <!-- TICKET -->
                     <fieldset class="animated fadeIn p-info">
+                        
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-3" style="margin: auto;left: 0;top: 0;">
+                                <img src="booked.png" alt="Success" class="img-fluid p-b-10">
+                            </div>
+                            <div class="col-md-8">
+                                <h6>
+                                    An email has been sent to your email address (<span class="show-email"></span>). Don't forget to look in your spam folder. Safe Journey <i class="fa fa-heart text-danger"></i>.<br><br>
+                                    <span class="note">Note: If you havent made a deposit by  days your reservation will be cancelled.</span>
+                                </h6>
+                            </div>
+                        </div>
+
                         <div class="row justify-content-center buttons">
                             <button type="button " class="btn previous_button">Back</button>
-                            <button type="button " class="btn next_button">Continue</button>
                         </div>
                     </fieldset>
                     <!-- END TICKET -->
@@ -364,7 +385,7 @@ $('.g-link').on('click', function(event) {
 var $gallery = $('.gallery1 a').simpleLightbox();
 
 //jQuery time
-var current_fs, next_fs, previous_fs, busId; //fieldsets
+var current_fs, next_fs, previous_fs, busId=0,seatsArray = []; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
@@ -398,6 +419,10 @@ $(".next_button").on('click', function(event) {
 
         } else {
             goNext(next_fs, current_fs)
+            seatsArray.splice(0,seatsArray.length);
+            sc.find('selected').each(function() {
+                seatsArray.push(this.settings.label)
+            });
         }
     } else if ($("fieldset").index(current_fs) == 3) {
         animating = false;
@@ -405,13 +430,34 @@ $(".next_button").on('click', function(event) {
 
         } else {
             goNext(next_fs, current_fs)
+            $('span.show-email').text($('input[name="email"]').val());
         }
     } else {
         goNext(next_fs, current_fs)
+        if ($("fieldset").index(next_fs) == 5) {
+            $data = {
+                'busId' : busId,
+                'seats' : seatsArray.toString(),
+                'personalInfo' : $('form').serializeArray()
+            }
+            $data = JSON.stringify($data)
+            $.ajax({
+                method: 'POST',//https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
+                url: 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/api/book.php',
+                data: $data,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
     }
 
 
-    // if ($("fieldset").index(current_fs) == 0) {
+
     //     let date = $('#date').val();
     //     let regexp = /^(\d{4})[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/;
     //     if (!regexp.test(date)) return 0;
@@ -433,6 +479,11 @@ $(".book_btn").click(function() {
     current_fs = $(this).parents('fieldset');
     next_fs = current_fs.next();
 
+    if ($("fieldset").index(next_fs) == 2) {
+        booked_seats(busId);
+        setInterval( booked_seats(busId),3000);
+    }
+
     //de-activate current step on progressbar
     goNext(next_fs, current_fs)
 
@@ -443,6 +494,11 @@ $(".previous_button").click(function() {
     current_fs = $(this).parent().parent();
 
     previous_fs = current_fs.prev();
+
+    if ($("fieldset").index(previous_fs) == 2) {
+        booked_seats(busId);
+        setInterval( booked_seats(busId),3000);
+    }
 
     //de-activate current step on progressbar
     if (previous_fs.length > 0) {

@@ -1,16 +1,11 @@
 <?php
-include_once '../database/dbConnection.php';
-
+date_default_timezone_set('Africa/Nairobi');
 /**
  * Class Bus
  */
-class Bus
+class Bus extends Email
 {
-    /**
-     * @var PDO
-     * @var string
-     */
-    private $conn, $table_name = 'buses';
+    public $conn;
     /**
      * @var int
      */
@@ -47,7 +42,7 @@ class Bus
      */
     public function getBusDetails(): array
     {
-        $query = 'SELECT * FROM ' . $this->table_name . ' WHERE id= :id LIMIT 0,1';
+        $query = 'SELECT * FROM buses WHERE id = :id LIMIT 0,1';
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -65,8 +60,7 @@ class Bus
      */
     public function getBookedSeats($bus_id = 0): array
     {
-        $bus_id = $bus_id == 0 ? $this->bus_id : $bus_id;
-
+        $bus_id = ($bus_id == 0 )? $this->bus_id : $bus_id;
         $query = 'SELECT
                     b.id,
                     c.fullname,
@@ -85,15 +79,48 @@ class Bus
                 FROM
                     bookings b
                 LEFT JOIN customers c ON b.customer_id = c.id
-                LEFT JOIN buses ON b.bus = buses.id ';
+                LEFT JOIN buses ON b.bus = buses.id 
+                WHERE 
+                    buses.id=:id ';
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(':id', $this->bus_id);
+        $stmt->bindParam(':id', $bus_ids);
 
         $stmt->execute();
 
-        return @$stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+        return @$stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * @param $seat_no
+     * @param string $date
+     * @return string
+     */
+    public function seatBooked($seat_no, $date = ''):string
+    {
+        $date = empty($date)? date('Y-m-d',strtotime('2019-12-27')): date('Y-m-d', strtotime($date));
+
+        $query = 'SELECT 
+                    *
+                  FROM
+                    bookings
+                  WHERE 
+                    seat_no=:seat_no
+                  AND 
+                    DATE(travel_date) = :date';
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':seat_no', $seat_no);
+        $stmt->bindParam(':date', $date);
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
+
 }

@@ -504,6 +504,26 @@ li.seatCharts-legendItem>div.seatCharts-seat.seater_35 {
     font-family: Monospace;
 }
 
+/*payment*/
+fieldset.p-info h6{
+    font-size: 19px;
+    line-height: 29px;
+    font-weight: bold;
+    font-weight: 550;
+    letter-spacing: -0.2px;
+    font-family: 'josefin','Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin-top: 0;
+}
+fieldset.p-info h6 b,
+fieldset.p-info h6 span.show-email{
+    color: #1E0A3C;
+    font-weight: 600;
+}
+fieldset.p-info h6 span.note{
+    color: #e60000;
+    font-weight: 610;
+}
+
 @media (max-width:576px) {
     div.seatCharts-container {
         border: none;
