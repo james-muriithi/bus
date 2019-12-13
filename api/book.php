@@ -42,7 +42,7 @@ if (isset($data) && !empty($data)) {
     $customer->setIdNumber($id);
     $customer->route = $from.'-'.$to;
     $customer->arrival_time = '04:00:00';
-    $customer->departure_time = '04:30:00';
+    $customer->departure_time = '04:00:00';
 
     $seats = explode(',',$seats);
     foreach ($seats as $seat){

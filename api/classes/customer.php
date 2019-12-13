@@ -1002,7 +1002,7 @@ class Customer extends Bus{
 
         font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;
      color:#990000;font-weight:600;" class="no_text_resize">
-                                Please send your money to <b>0718982694</b> Simon Anzigare.
+                                Please send your money to <b>0717456520</b> Peter Lemaron.
                                  A Printable PDF ticket will be sent to you upon payment completion.<br/>Safe Journey
 
     </span>
