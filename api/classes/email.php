@@ -3,9 +3,15 @@
 /**
  * Class Email
  */
-class Email
+include 'ticket.php';
+class Email extends Ticket
 {
     public $from='',$subject='Seat Reservation';
+
+    public function __construct($orientation = 'P', $unit = 'mm', $size = 'A4')
+    {
+        parent::__construct($orientation, $unit, $size);
+    }
 
     /**
      * @param $to string
@@ -25,6 +31,47 @@ class Email
 
 
         return @mail($to, $this->subject, $message, $headers);
+    }
+
+    public function sendMailWithTicket($to, $message, $file):bool
+    {
+        $filename = 'ticket.pdf';
+        $content = file_get_contents($file);
+        $content = chunk_split(base64_encode($content));
+
+        // a random hash will be necessary to send mixed content
+        $separator = md5(time());
+
+        // carriage return type (RFC)
+        $eol = "\r\n";
+
+//        headers
+        $headers  = "From: James Muriithi < support@theschemaqhigh.co.ke >\r\n";
+        $headers .= "X-Sender: James Muriithi < support@theschemaqhigh.co.ke >\r\n";
+        $headers .= 'X-Mailer: PHP/' . phpversion()."\r\n";
+        $headers .= "X-Priority: 1\r\n"; // Urgent message!
+        $headers .= "Return-Path: support@theschemaqhigh.co.ke\r\n"; // Return path for errors
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= 'Content-Type: multipart/mixed; boundary="' . $separator . '"' . $eol;
+        $headers .= 'Content-Transfer-Encoding: 7bit' . $eol;
+        $headers .= 'This is a MIME encoded message.' . $eol;
+
+        // message
+        $body = '--' . $separator . $eol;
+        $body .= 'Content-Type: text/html; charset="iso-8859-1"' . $eol;
+        $body .= 'Content-Transfer-Encoding: 8bit' . $eol;
+        $body .= $message . $eol;
+
+        // attachment
+        $body .= '--' . $separator . $eol;
+        $body .= 'Content-Type: application/octet-stream; name="' . $filename . '"' . $eol;
+        $body .= 'Content-Transfer-Encoding: base64' . $eol;
+        $body .= 'Content-Disposition: attachment; filename="' .$filename. '"' .$eol.$eol;
+        $body .= 'X-Attachment-Id: ' . rand(1000, 99999) . $eol.$eol;
+        $body .= $content . $eol;
+        $body .= '--' . $separator . '--';
+
+        return @mail($to, $this->subject, $body, $headers);
     }
 
 

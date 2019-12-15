@@ -1,7 +1,9 @@
 <?php
 include 'database/dbConnection.php';
+include 'classes/ticket.php';
 include 'classes/email.php';
 include 'classes/customer.php';
+
 
 $customer = new Customer();
 $arr = array(
@@ -26,6 +28,8 @@ $customer->arrival_time = $arr['arrival_time'];
 $customer->departure_time = $arr['departure_time'];
 
 $arr1 = explode(',',$arr['seat_no']);
+
+$customer->printTicket(25);
 
 foreach ($arr1 as $seat_no){
 //    book
