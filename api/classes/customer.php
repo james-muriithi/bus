@@ -352,6 +352,16 @@ class Customer extends Bus{
         return @$stmt->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
+    public function generateSMS($seat_no):string
+    {
+        $ticketDetails = $this->getTicketDetails($seat_no);
+        $message = 'Dear '.$ticketDetails['fullname'].', your payment was successsfully received. A ticket was sent to your email address '
+            .$ticketDetails['email'].'. Arrival time at '.@explode('-',$ticketDetails['route'])[0] .' is'
+            .$ticketDetails['arrival_time'].'. Your seat number is '.$ticketDetails['seat_no']
+                        .'. Have a safe journey and blessed holidays.';
+        return $message;
+    }
+
 
     /**
      * @param $seat_no

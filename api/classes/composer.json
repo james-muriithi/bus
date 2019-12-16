@@ -1,0 +1,14 @@
+{
+    "name": "james/api",
+    "description": "\u001b[A\u001b[A\u001b[A\u001b[B\u001b[B\u001b[Bmy bus api",
+    "type": "project",
+    "require": {
+        "africastalking/africastalking": "^2.3"
+    },
+    "authors": [
+        {
+            "name": "james-muriithi",
+            "email": "muriithijames556@gmail.com"
+        }
+    ]
+}

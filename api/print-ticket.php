@@ -26,7 +26,15 @@ if (isset($_GET['bid'],$_GET['seat_no'])){
         if (!$customer->sendMailWithTicket($customer->getTicketDetails($seat_no)['email'],$customer->generateMessageTicket($seat_no),$file)){
             echo json_encode(['error'=>'unable to send ticket']);
         }else{
-            echo json_encode(['success'=>'ticket sent']);
+            $msg = 'ticket sent';
+            $phone = preg_replace('/^07/','+2547',$customer->getTicketDetails($seat_no)['phone']);
+            if ($customer->sendSMS($phone,$customer->generateSMS($seat_no))){
+                $msg .= ' and sms sent';
+            }else{
+                $msg .= ' and sms not sent';
+            }
+
+            echo json_encode(['success'=>$msg]);
         }
     }else{
         echo json_encode(['error'=>'ticket not paid for']);
