@@ -167,7 +167,7 @@
                                                         </div>
                                                         <div class="col-sm-6 fs-14">
                                                             <i class="material-icons" style="font-size: 13px;">event_seat</i> Availability:
-                                                            <span class="p-r-5 fr">2 seats left </span>
+                                                            <span class="p-r-5 fr"><span class="seats-left">0</span> seats left </span>
                                                         </div>
                                                         <div class="col-sm-6 fs-14">
                                                             <i class="fa fa-money"></i> Fare:
@@ -414,6 +414,17 @@ $(".next_button").on('click', function(event) {
     if ($("fieldset").index(next_fs) == 1) {
         $('span.from').text($('select.from').val());
         $('span.to').text($('input.to').val());
+        $.ajax({
+            method: 'GET', //https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
+            url: 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id=1&booked_seats',
+            success: function (data) {
+                $('span.seats-left').text(51 - data.length);
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+
     }
 
     if ($("fieldset").index(current_fs) == 2) {
