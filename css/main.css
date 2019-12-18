@@ -92,7 +92,7 @@ ul {
 
 .navbar {
     position: absolute;
-    padding: 0px;
+    padding: 13px 0;
     top: 0;
     width: 100%;
     background: rgba(12, 0, 50, .4);
@@ -625,4 +625,161 @@ fieldset.p-info h6 span.note{
     ul.navbar-nav .nav-item:last-child {
         margin-right: -70px;
     }
+}
+
+/*datatable*/
+.dataTables_wrapper{
+    font-size: 14px;
+}
+table{
+    width:100%;
+}
+#example_filter{
+    float:right;
+}
+#example_paginate{
+    float:right;
+}
+label {
+    display: inline-flex;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+
+}
+div.dataTables_length{
+    float: left;
+}
+.dt-buttons .dt-button {
+    background: #1976d2 none repeat scroll 0 0;
+    border-radius: 4px;
+    color: #ffffff;
+    margin-right: 3px;
+    padding: 5px 15px;
+}
+
+.dt-buttons .dt-button:hover {
+    background: #2f3d4a none repeat scroll 0 0;
+}
+
+.dataTables_info,
+.dataTables_length {
+    display: inline-block;
+}
+
+.dataTables_length {
+    margin-top: 10px;
+}
+
+.dataTables_length select {
+    background-color: transparent;
+    background-image: linear-gradient(#1976d2, #1976d2), linear-gradient(#b1b8bb, #b1b8bb);
+    background-position: center bottom, center calc(99%);
+    background-repeat: no-repeat;
+    background-size: 0 2px, 100% 1px;
+    border: 0 none;
+    padding-bottom: 5px;
+    transition: background 0s ease-out 0s;
+}
+
+.dataTables_length select:focus {
+    background-image: linear-gradient(#1976d2, #1976d2), linear-gradient(#b1b8bb, #b1b8bb);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    outline: medium none;
+    transition-duration: 0.3s;
+}
+
+.dataTables_filter {
+    float: right;
+    margin-top: 10px;
+}
+
+.dataTables_filter input {
+    background-color: transparent;
+    background-image: linear-gradient(#1976d2, #1976d2), linear-gradient(#b1b8bb, #b1b8bb);
+    background-position: center bottom, center calc(99%);
+    background-repeat: no-repeat;
+    background-size: 0 2px, 100% 1px;
+    border: 0 none;
+    border-radius: 0;
+    box-shadow: none;
+    float: none;
+    margin-left: 10px;
+    transition: background 0s ease-out 0s;
+}
+
+.dataTables_filter input:focus {
+    background-image: linear-gradient(#1976d2, #1976d2), linear-gradient(#b1b8bb, #b1b8bb);
+    background-size: 100% 2px, 100% 1px;
+    box-shadow: none;
+    outline: medium none;
+    transition-duration: 0.3s;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_desc_disabled {
+    background: transparent none repeat scroll 0 0;
+}
+
+table.dataTable thead .sorting_asc::after {
+    content: "\f0de";
+    cursor: pointer;
+    font-family: fontawesome;
+    margin-left: 10px;
+}
+
+table.dataTable thead .sorting_desc::after {
+    content: "\f0dd";
+    cursor: pointer;
+    font-family: fontawesome;
+    margin-left: 10px;
+}
+
+table.dataTable thead .sorting::after {
+    color: rgba(50, 50, 50, 0.5);
+    content: "\f0dc";
+    cursor: pointer;
+    font-family: fontawesome !important;
+    margin-left: 10px;
+}
+@media (max-width: 667px) {
+    .dt-buttons {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dt-buttons {
+        display: inline-block;
+    }
+}
+.dt-buttons {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding-top: 5px;
+    float: left;
+}
+
+.dt-buttons button {
+    background: #1976d2 none repeat scroll 0 0!important;
+    border-radius: 4px;
+    color: #ffffff;
+    margin-right: 3px;
+    padding: 5px 15px;
+}
+
+.dt-buttons button:hover {
+    background: #2f3d4a none repeat scroll 0 0;
+}
+
+.dataTables_info,
+.dataTables_length {
+    display: inline-block;
+}
+
+.dataTables_length {
+    margin-top: 10px;
 }
