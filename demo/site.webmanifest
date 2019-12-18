@@ -1,0 +1,15 @@
+{
+    "name": "My Bus",
+    "short_name": "My Bus",
+    "icons": [
+        {
+            "src": "images/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#25274d",
+    "background_color": "#25274d",
+    "start_url": "https://james-muriithi.github.io/bus/",
+    "display": "standalone"
+}
