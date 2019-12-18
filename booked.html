@@ -122,8 +122,18 @@
             dom: 'Bfrtip',
             order: [5,'desc'],
             buttons: [
-                'pdf',
-                'print'
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: 'th:not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: 'th:not(:last-child)'
+                    }
+                }
             ],
             'ajax' : {
                 url : 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id=1&show_booked_seats',
@@ -137,7 +147,11 @@
                 { 'data' : "route" },
                 { 'data' : "seat_no" },
                 { 'data' : "booking_date" },
-                { 'data' : "paid" },
+                { data : null,
+                    render: function ( data, type, row ) {
+                        return Number(data.paid) == 0 ? 'No': 'Yes'
+                    }
+                },
                 {
                     data: null,
                     render: function ( data, type, row ) {
