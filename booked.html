@@ -119,6 +119,12 @@
         $data = [];
 
         $('#example').DataTable({
+            dom: 'Bfrtip',
+            order: [5,'desc'],
+            buttons: [
+                'pdf',
+                'print'
+            ],
             'ajax' : {
                 url : 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id=1&show_booked_seats',
                 "dataType": "json",

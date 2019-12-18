@@ -745,3 +745,41 @@ table.dataTable thead .sorting::after {
     font-family: fontawesome !important;
     margin-left: 10px;
 }
+@media (max-width: 667px) {
+    .dt-buttons {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dt-buttons {
+        display: inline-block;
+    }
+}
+.dt-buttons {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding-top: 5px;
+    float: left;
+}
+
+.dt-buttons button {
+    background: #1976d2 none repeat scroll 0 0!important;
+    border-radius: 4px;
+    color: #ffffff;
+    margin-right: 3px;
+    padding: 5px 15px;
+}
+
+.dt-buttons button:hover {
+    background: #2f3d4a none repeat scroll 0 0;
+}
+
+.dataTables_info,
+.dataTables_length {
+    display: inline-block;
+}
+
+.dataTables_length {
+    margin-top: 10px;
+}
