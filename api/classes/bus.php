@@ -16,6 +16,7 @@ class Bus extends Email
      */
     public function __construct($bus_id = 0)
     {
+        parent::__construct();
         $database = new Database();
         $this->conn = $database::getInstance();
         $this->bus_id = $bus_id;
@@ -35,6 +36,20 @@ class Bus extends Email
     public function setBusId($bus_id): void
     {
         $this->bus_id = $bus_id;
+    }
+
+    public function setPaid($id):bool
+    {
+        $query = 'UPDATE bookings SET paid = 1 WHERE id =:id';
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        return $stmt->execute();
     }
 
     /**

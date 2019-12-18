@@ -18,6 +18,24 @@ if (isset($_GET['booked_seats'], $_GET['bus_id']) && !empty($_GET['bus_id'])){
     echo json_encode(array_map(static function ($arr){ return $arr['seat_no'];},$booked));
 }
 
+if (isset($_GET['show_booked_seats'], $_GET['bus_id']) && !empty($_GET['bus_id'])){
+    $bus_id = Database::clean($_GET['bus_id']);
+    $bus->setBusId($bus_id);
+    $booked = $bus->getBookedSeats($bus_id);
+    echo json_encode(['data'=>$booked]);
+}
+
+if (isset($_GET['set_paid'],$_GET['id']) &&  !empty($_GET['id'])){
+    $id = Database::clean($_GET['id']);
+
+    $booked = $bus->setPaid($id);
+    if ($booked){
+        echo json_encode(['success'=>'successfully updated']);
+    }else{
+        echo json_encode(['error'=>'error updating payment status']);
+    }
+}
+
 
 $customer = new Customer();
 

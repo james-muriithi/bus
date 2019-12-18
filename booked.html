@@ -32,18 +32,12 @@
     <!-- end of icons  -->
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrapValidator.css">
     <link rel="stylesheet" type="text/css" href="css/nice-select.css">
     <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery.seat-charts.css">
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
     <link href="fonts/material-design-icons/material-icon.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="plugins/material-datetimepicker/bootstrap-material-datetimepicker.css" />
-    <link rel="stylesheet" type="text/css" href="css/animate.css">
-    <link rel="stylesheet" type="text/css" href="css/material.min.css">
-    <link rel="stylesheet" type="text/css" href="plugins/lobibox/css/lobibox.min.css">
-    <link rel="stylesheet" type="text/css" href="css/simplelightbox.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- end of css -->
 </head>
 
@@ -85,7 +79,23 @@
 <!-- main content -->
 <main class="col-md-12">
     <div class="col-md-11 col-lg-9 col-xl-8 mx-auto window">
-
+        <div class="table-responsive">
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Id #</th>
+                    <th>Route</th>
+                    <th>Seat No</th>
+                    <th>Date</th>
+                    <th>Paid</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </main>
 </body>
@@ -99,8 +109,59 @@
 <script type="text/javascript " src="js/jquery-easing.min.js "></script>
 <script type="text/javascript " src="js/jquery.nice-select.js "></script>
 
-<script type="text/javascript " src="js/script.js "></script>
+<!--datatables-->
+<script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
+<!--end-->
+
 <script type="text/javascript">
-    $('select').niceSelect();
+    $(document).ready( function () {
+        //https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
+        $data = [];
+
+        $('#example').DataTable({
+            'ajax' : {
+                url : 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id=1&show_booked_seats',
+                "dataType": "json",
+                "type": "GET"
+            },
+            'columns' : [
+                { 'data' : "fullname" },
+                { 'data' : "email" },
+                { 'data' : "id_number" },
+                { 'data' : "route" },
+                { 'data' : "seat_no" },
+                { 'data' : "booking_date" },
+                { 'data' : "paid" },
+                {
+                    data: null,
+                    render: function ( data, type, row ) {
+                        if (Number(data.paid) == 0) return '<button class="btn btn-success btn-set-pay" id='+data.id+' data-seat='+data.seat_no+'>' +
+                            'paid' +
+                            '</button>';
+                        return '';
+                    }
+                }
+            ]
+        })
+        $('body').on('click','button.btn-set-pay',function (event) {
+            let id = $(event.target).attr('id');
+            $.ajax({
+                method: 'GET', //https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
+                url: 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?set_paid&id='+id,
+                success: function (data) {
+                    $data = JSON.stringify(data);
+                    console.log(data)
+                    location.reload()
+                    if (data.success){
+                        // window.location.href = 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/print-ticket.php?bid=1&seat_no='
+                        //     +$(event.target).data('seat');
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        })
+    } );
 </script>
 <!-- end of js -->
