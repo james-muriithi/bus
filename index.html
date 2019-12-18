@@ -669,5 +669,13 @@ $('ul#progressbar').on('click', 'li', function(event) {
     }else if (i < j) $("fieldset").eq(j).find('.previous_button').trigger('click')
 
 });
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js')
+            .then(function() {
+                console.log("Service Worker Registered,");
+            });
+    });
+}
 </script>
 <!-- end of js -->
