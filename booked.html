@@ -78,7 +78,7 @@
 <!-- </navbar -->
 <!-- main content -->
 <main class="col-md-12">
-    <div class="col-md-11 col-lg-9 col-xl-8 mx-auto window">
+    <div class="col-md-11 col-lg-9 col-xl-10 mx-auto window">
         <div class="table-responsive">
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
@@ -86,7 +86,8 @@
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Id #</th>
-                    <th>Route</th>
+                    <th>Phone</th>
+                    <th>Pickup</th>
                     <th>Seat No</th>
                     <th>Date</th>
                     <th>Paid</th>
@@ -144,7 +145,13 @@
                 { 'data' : "fullname" },
                 { 'data' : "email" },
                 { 'data' : "id_number" },
-                { 'data' : "route" },
+                { 'data' : "phone" },
+                {
+                    data : null,
+                    render: function ( data, type, row ) {
+                        return data.route.split('-')[0]
+                    }
+                },
                 { 'data' : "seat_no" },
                 { 'data' : "booking_date" },
                 { data : null,
