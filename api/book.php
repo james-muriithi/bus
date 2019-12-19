@@ -30,8 +30,11 @@ if (isset($_GET['set_paid'],$_GET['id']) &&  !empty($_GET['id'])){
 
     $booked = $bus->setPaid($id);
     if ($booked){
+        if ($customer->sendMail('muriithijames556@gmail.com',$customer->generateMessageSendEmail($id))){
+            echo json_encode(['success'=>'successfully updated and email sent to james']);
+            die();
+        }
         echo json_encode(['success'=>'successfully updated']);
-        $customer->send
     }else{
         echo json_encode(['error'=>'error updating payment status']);
     }
@@ -96,6 +99,5 @@ if (isset($data) && !empty($data)) {
     
     
 }
-
 
 //print_r($customer->getBookedSeats());

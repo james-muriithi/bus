@@ -38,6 +38,48 @@ class Bus extends Email
         $this->bus_id = $bus_id;
     }
 
+    public function getBookDetails($id,$bus_id = ''):array
+    {
+        $bus_id = ($bus_id == '' )? $this->bus_id : $bus_id;
+        $query = 'SELECT
+                    b.id,
+                    c.fullname,
+                    c.id_number,
+                    c.phone,
+                    c.email,
+                    b.route,
+                    b.seat_no,
+                    buses.number_plate,
+                    buses.bus_name,
+                    buses.seats,
+                    b.arrival_time,
+                    b.departure_time,
+                    b.booking_date,
+                    b.paid
+                FROM
+                    bookings b
+                LEFT JOIN customers c ON b.customer_id = c.id
+                LEFT JOIN buses ON b.bus = buses.id 
+                WHERE 
+                    buses.id=:bid 
+                AND
+                    b.id =:id';
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':bid', $bus_id);
+
+        $stmt->execute();
+
+        return @$stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
     public function setPaid($id):bool
     {
         $query = 'UPDATE bookings SET paid = 1 WHERE id =:id';
@@ -53,7 +95,7 @@ class Bus extends Email
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getBusDetails(): array
     {
