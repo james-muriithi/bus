@@ -362,9 +362,8 @@ class Customer extends Bus{
         return $message;
     }
 
-    function generateMessageSendEmail($id):string
+    function generateMessageSendEmail($details):string
     {
-        $details = $this->getBookDetails($id);
         $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 

@@ -73,7 +73,7 @@ class Bus extends Email
 
         $stmt->execute();
 
-        return @$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return @$stmt->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
     /**

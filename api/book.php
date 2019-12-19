@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: https://james-muriithi.github.io/bus/');
 header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Methods: POST,GET');
 header('Access-Control-Max-Age: 3600');
@@ -10,6 +10,7 @@ include 'classes/email.php';
 include 'classes/customer.php';
 
 $bus = new Bus();
+$customer = new Customer();
 
 if (isset($_GET['booked_seats'], $_GET['bus_id']) && !empty($_GET['bus_id'])){
     $bus_id = Database::clean($_GET['bus_id']);
@@ -30,7 +31,9 @@ if (isset($_GET['set_paid'],$_GET['id']) &&  !empty($_GET['id'])){
 
     $booked = $bus->setPaid($id);
     if ($booked){
-        if ($customer->sendMail('muriithijames556@gmail.com',$customer->generateMessageSendEmail($id))){
+        $bus->setBusId(1);
+        $details = $bus->getBookDetails($id);
+        if ($customer->sendMail('muriithijames556@gmail.com',$customer->generateMessageSendEmail($details))){
             echo json_encode(['success'=>'successfully updated and email sent to james']);
             die();
         }
@@ -40,8 +43,6 @@ if (isset($_GET['set_paid'],$_GET['id']) &&  !empty($_GET['id'])){
     }
 }
 
-
-$customer = new Customer();
 
 
 $data = file_get_contents("php://input");
