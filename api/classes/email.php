@@ -19,24 +19,35 @@ class Email extends Ticket
     /**
      * @param $to string
      * @param $message string
+     * @param string $cc
      * @return bool
      */
-    public function sendMail($to, $message):bool
+    public function sendMail($to, $message, $cc=''):bool
     {
         // To send HTML mail, the Content-type header must be set
         $headers  = "From: James Muriithi < support@theschemaqhigh.co.ke >\r\n";
         $headers .= "X-Sender: James Muriithi < support@theschemaqhigh.co.ke >\r\n";
-        $headers .= 'X-Mailer: PHP/' . phpversion()."\r\n";
+        $headers .= 'X-Mailer: PHP/' . PHP_VERSION ."\r\n";
         $headers .= "X-Priority: 1\r\n"; // Urgent message!
         $headers .= "Return-Path: support@theschemaqhigh.co.ke\r\n"; // Return path for errors
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=iso-8859-1\r\n";
+        if(!empty($cc) ){
+            $headers .= 'Cc: '.$cc . "\r\n";
+        }
 
 
         return @mail($to, $this->subject, $message, $headers);
     }
 
-    public function sendMailWithTicket($to, $message, $file):bool
+    /**
+     * @param $to
+     * @param $message
+     * @param $file
+     * @param $cc
+     * @return bool
+     */
+    public function sendMailWithTicket($to, $message, $file, $cc):bool
     {
         $filename = 'ticket.pdf';
         $content = file_get_contents($file);
@@ -50,6 +61,7 @@ class Email extends Ticket
 
 //        headers
         $headers  = "From: James Muriithi < support@theschemaqhigh.co.ke >\r\n";
+        $headers .= 'Cc: '.$cc . $eol;
         $headers .= "X-Sender: James Muriithi < support@theschemaqhigh.co.ke >\r\n";
         $headers .= 'X-Mailer: PHP/' . phpversion()."\r\n";
         $headers .= "X-Priority: 1\r\n"; // Urgent message!
@@ -58,6 +70,9 @@ class Email extends Ticket
         $headers .= 'Content-Type: multipart/mixed; boundary="' . $separator . '"' . $eol;
         $headers .= 'Content-Transfer-Encoding: 7bit' . $eol;
         $headers .= 'This is a MIME encoded message.' . $eol;
+//        if(!empty($cc) ){
+//            $headers .= 'Cc: '.$cc . $eol;
+//        }
 
         // message
         $body = '--' . $separator . $eol;
@@ -77,7 +92,12 @@ class Email extends Ticket
         return @mail($to, $this->subject, $body, $headers);
     }
 
-    public function sendSMS($to,$message):bool
+    /**
+     * @param $to
+     * @param $message
+     * @return bool
+     */
+    public function sendSMS($to, $message):bool
     {
         $username = 'jam_es'; // use 'sandbox' for development in the test environment
         $apiKey   = '6c1a5e29521563f1426c9a1d768357016f66c5a0adf7a7b48fdf1d0dea0e823c'; // use your sandbox app API key for development in the test environment

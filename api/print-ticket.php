@@ -23,13 +23,14 @@ if (isset($_GET['bid'],$_GET['seat_no'])){
             echo json_encode(['error'=>'ticket file does not exist']);
             exit();
         }
-        if (!$customer->sendMailWithTicket($customer->getTicketDetails($seat_no)['email'],$customer->generateMessageTicket($seat_no),$file)){
+        if (!$customer->sendMailWithTicket($customer->getTicketDetails($seat_no)['email'],$customer->generateMessageTicket($seat_no),$file,
+            'plemaron5@gmail.com, muriithijames123@gmail.com')){
             echo json_encode(['error'=>'unable to send ticket']);
         }else{
-            $msg = 'ticket sent';
+            $msg = 'ticket sent to email';
             $phone = preg_replace('/^07/','+2547',$customer->getTicketDetails($seat_no)['phone']);
             if ($customer->sendSMS($phone,$customer->generateSMS($seat_no))){
-                $msg .= ' and sms sent';
+                $msg .= ' and sms sent to '.$phone;
             }else{
                 $msg .= ' and sms not sent';
             }

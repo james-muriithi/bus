@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: https://james-muriithi.github.io/bus/');
+header('Access-Control-Allow-Origin: https://james-muriithi.github.io');
 header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Methods: POST,GET');
 header('Access-Control-Max-Age: 3600');
