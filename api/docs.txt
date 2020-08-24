@@ -1,0 +1,124 @@
+url = "https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/"
+
+requests
+(GET)
+1. ?booked_seats&bus_id=1 (bus_id is 1 because i currently have 1 bus)
+response example
+["3","4","5","6","21","22","12","8","9","26","31","36","33","25","30","20","35","17","19","40","23","24","29","51","32","11","37","14","39","18","28","38","41","7","42","43","44","45","2","1","15","27","16","34","46","47","50","49","48","10","13"]
+
+2. ?show_booked_seats&bus_id=1
+response example
+{ 
+   "data":[ 
+      { 
+         "id":"1",
+         "fullname":"Ednah Samba",
+         "id_number":"33350483",
+         "phone":"0714145109",
+         "email":"sambaedna6@gmail.com",
+         "route":"Voi-Kabarak",
+         "seat_no":"3",
+         "number_plate":"KCD 452G",
+         "bus_name":"Majaoni School Bus",
+         "seats":"51",
+         "arrival_time":"04:00:00",
+         "departure_time":"04:00:00",
+         "booking_date":"2019-12-13 10:22:04",
+         "paid":"1"
+      },
+      { 
+         "id":"2",
+         "fullname":"Ednah Samba",
+         "id_number":"33350483",
+         "phone":"0714145109",
+         "email":"sambaedna6@gmail.com",
+         "route":"Voi-Kabarak",
+         "seat_no":"4",
+         "number_plate":"KCD 452G",
+         "bus_name":"Majaoni School Bus",
+         "seats":"51",
+         "arrival_time":"04:00:00",
+         "departure_time":"04:00:00",
+         "booking_date":"2019-12-13 10:22:05",
+         "paid":"1"
+      }
+   ]
+}
+
+3. ?id=79&bus_id=1&set_paid  (id is the book id gotten from request 2)
+example response
+{
+success: "successfully updated and email sent to james"
+}
+		or
+{
+success: "successfully updated" //if email was not sent
+}
+
+		or 
+{
+error: "error updating payment status"
+}
+
+POST
+
+1. to the url
+example of data to be posted
+
+{
+  "busId": 1,
+  "seats": "20,30,12",
+  "personalInfo": [
+    {
+      "name": "from",
+      "value": "Pwani Uni"
+    },
+    {
+      "name": "to",
+      "value": "Kabarak"
+    },
+    {
+      "name": "date",
+      "value": "2019-12-27"
+    },
+    {
+      "name": "name",
+      "value": "James Muriithi"
+    },
+    {
+      "name": "id",
+      "value": "35353565"
+    },
+    {
+      "name": "phone",
+      "value": "0789152672"
+    },
+    {
+      "name": "email",
+      "value": "muriithijames556@gmail.com"
+    }
+  ]
+}
+
+example response
+{
+success: "Booked sucessfully"
+}
+
+		or
+		
+{
+error: "an unexpected error occurred" //if it was unable to book
+}
+
+		or
+{
+error: "seat already booked" //if seat is booked
+}
+
+		or 
+{
+error: "seat booked but unable to send email"
+}
+
+//it was that simple

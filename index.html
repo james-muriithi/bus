@@ -465,6 +465,7 @@ $(".next_button").on('click', function(event) {
                 'personalInfo' : $('form').serializeArray()
             }
             $data = JSON.stringify($data)
+            console.log($data);
             $.ajax({
                 method: 'POST',//https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/
                 url: 'api/book.php',
